@@ -1,4 +1,7 @@
-package org.example.apps;
+package org.example;
+
+import org.example.apps.AdminApp;
+import org.example.apps.CustomerApp;
 
 import java.util.Scanner;
 

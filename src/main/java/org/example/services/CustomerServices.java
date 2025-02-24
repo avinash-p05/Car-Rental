@@ -3,22 +3,27 @@ package org.example.services;
 
 import org.example.models.Car;
 import org.example.models.Customer;
+import org.example.models.Priority;
 import org.example.models.TravelHistory;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.PriorityBlockingQueue;
 
 public class CustomerServices {
     private static CustomerServices instance;
     private final List<Customer> customers;
     private final CarServices carServices;
     private final CSVFileService csvFileService;
+    private final AuthServices authServices;
     private Customer currentCustomer;
+    private PriorityBlockingQueue<Priority> priorityCustomers = new PriorityBlockingQueue<>();
 
     private CustomerServices() {
         csvFileService = CSVFileService.getInstance();
         customers = csvFileService.loadCustomers();
         carServices = CarServices.getInstance();
+        authServices = AuthServices.getInstance();
     }
 
     public static CustomerServices getInstance() {
@@ -56,6 +61,7 @@ public class CustomerServices {
         return true;
     }
 
+    //add priority for the customers
     public boolean rentCar(String customerName) {
         if (currentCustomer == null || !currentCustomer.getName().equals(customerName)) {
             System.out.println("Please login first.");
@@ -88,6 +94,7 @@ public class CustomerServices {
         Car selectedCar = availableCars.get(selection - 1);
         TravelHistory travelHistory = new TravelHistory(currentCustomer.getPhoneNumber(), selectedCar.getCarId());
         currentCustomer.addTravelHistory(travelHistory);
+
         selectedCar.setAvailability(false);
 
         // Save changes

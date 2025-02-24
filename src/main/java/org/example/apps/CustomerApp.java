@@ -1,6 +1,7 @@
 package org.example.apps;
 
 import org.example.models.Customer;
+import org.example.services.AuthServices;
 import org.example.services.CarServices;
 import org.example.services.CustomerServices;
 
@@ -9,7 +10,7 @@ import java.util.Scanner;
 public class CustomerApp {
     private final CarServices carServices = CarServices.getInstance();
     private final CustomerServices customerServices = CustomerServices.getInstance();
-
+    private final AuthServices authServices = AuthServices.getInstance();
     public int displayMenu() {
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
@@ -42,6 +43,7 @@ public class CustomerApp {
                     String pn = scanner.nextLine();
                     System.out.print("Enter the password: ");
                     String pw = scanner.nextLine();
+                    pw = authServices.generateHash(pw);
                     name = customerServices.login(pn, pw);
                     break;
 
@@ -52,8 +54,8 @@ public class CustomerApp {
                     name = scanner.nextLine();
                     System.out.print("Enter the password: ");
                     String password = scanner.nextLine();
-
-                    boolean status = customerServices.register(phoneNumber, name, password);
+                    String hashedPassword = authServices.generateHash(password);
+                    boolean status = customerServices.register(phoneNumber, name, hashedPassword);
                     if (status) {
                         System.out.println("Successfully Registered!!");
                     } else {

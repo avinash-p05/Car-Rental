@@ -1,5 +1,7 @@
 package org.example.services;
 
+import org.springframework.security.crypto.bcrypt.BCrypt;
+
 public class AuthServices {
 
     private static AuthServices instance;
@@ -12,9 +14,11 @@ public class AuthServices {
     }
 
     public String generateHash(String data){
-        return Integer.toString(data.hashCode());
+        String hashedPassword = BCrypt.hashpw(data, BCrypt.gensalt());
+        return hashedPassword;
     }
-    public boolean verifyHash(String data,int originalPasswordHash){
-        return data.hashCode()==originalPasswordHash;
+
+    public boolean verifyHash(String data,String originalPasswordHash){
+        return BCrypt.checkpw(data, originalPasswordHash);
     }
 }

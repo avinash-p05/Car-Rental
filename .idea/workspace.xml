@@ -5,24 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="517c2b9d-e4b4-49ca-81da-c49f71da887e" name="Changes" comment="changes">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/models/Billing.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/services/AdvanceService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/services/BillingService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/structures/CarCategoryList.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/structures/DataCache.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/structures/RentalGraph.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/cars.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/customers.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/travel_history.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/user_profiles/9008500585.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/user_profiles/9876543211.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/billings.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/billings.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/cars.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/cars.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/travel_history.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/travel_history.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apps/AdminApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apps/AdminApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apps/CustomerApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apps/CustomerApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/models/Car.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/models/Car.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/services/CSVFileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/services/CSVFileService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/services/CarServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/services/CarServices.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/services/CustomerServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/services/CustomerServices.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/services/AdvanceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/services/AdvanceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/structures/DataCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/structures/DataCache.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/structures/RentalGraph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/structures/RentalGraph.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

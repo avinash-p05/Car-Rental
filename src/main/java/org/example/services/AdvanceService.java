@@ -74,7 +74,9 @@ public class AdvanceService {
 
     public void displayCarRecommendationsForCustomer(String customerId) {
         Set<String> recommendedCarIds = rentalGraph.recommendCarsForCustomer(customerId);
-        System.out.println("Recommended Cars for Customer ID: " + customerId);
+        System.out.println("Your Recommended Cars - ");
+        System.out.println("----------------");
+
 
         for (String carId : recommendedCarIds) {
             Car car = carCache.get(carId);
@@ -84,10 +86,9 @@ public class AdvanceService {
                     carCache.put(carId, car);
                 }
             }
-//            Car car = CarServices.getInstance().getCarById(carId);
-//            System.out.println(car.getCarId());
             if (car != null  ) {
                 System.out.println("Car ID: " + car.getCarId() + " | Model: " + car.getModel() + " | Category: " + car.getCategory());
+                System.out.println();
             }
         }
     }
@@ -95,6 +96,7 @@ public class AdvanceService {
     public void displayMostPopularCars(int limit) {
         List<Map.Entry<String, Integer>> popularCarIds = rentalGraph.getMostPopularCars(limit);
         System.out.println("Top " + limit + " Most Popular Cars:");
+        System.out.println("----------------");
 
         for (Map.Entry<String, Integer> entry : popularCarIds) {
             String carId = entry.getKey();
@@ -109,8 +111,11 @@ public class AdvanceService {
             if (car != null) {
                 System.out.println("Car ID: " + car.getCarId() + " | Model: " + car.getModel() + " | Category: " + car.getCategory() +
                         " | Rented " + entry.getValue() + " times");
+                System.out.println();
             }
+
         }
+        System.out.println();
     }
 
     public void addPremiumCustomer(String customerId) {

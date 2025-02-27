@@ -183,7 +183,7 @@ public class AdminApp {
     }
 
     public boolean login(String pn, String pw) {
-        return Objects.equals(pn, "9980385537") && Objects.equals(pw, "123ok");
+        return Objects.equals(pn, "avinash") && Objects.equals(pw, "123");
     }
 
     public void saveAndExit() {

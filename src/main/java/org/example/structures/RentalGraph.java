@@ -103,7 +103,6 @@ public class RentalGraph {
         // Get all cars this customer has rented
         List<String> rentedCars = getCarsRentedByCustomer(customerId);
 
-        System.out.println("1");
         // Find customers with similar preferences
         Set<String> similarCustomers = new HashSet<>();
         for (String carId : rentedCars) {
@@ -114,7 +113,6 @@ public class RentalGraph {
                 }
             }
         }
-        System.out.println("2");
         // Get cars rented by similar customers but not by this customer
         Set<String> rentedCarsSet = new HashSet<>(rentedCars);
         for (String customer : similarCustomers) {
@@ -125,7 +123,6 @@ public class RentalGraph {
                 }
             }
         }
-        System.out.println("3");
         return recommendations;
     }
 }

@@ -1,3 +1,5 @@
 CarId,Model,Available,HourlyRate,Category
 KA22EK1234,Tata Nexon,true,20.00,Standard
-KA22ER1234,Ford Mustang,true,100.00,Premium
+KA22ER1234,Ford Mustang,false,100.00,Premium
+KA23Ek1234,WagonR,true,10.00,Economy
+KA24TN9466,Swift,true,15.00,Economy

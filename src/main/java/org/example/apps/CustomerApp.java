@@ -74,6 +74,7 @@ public class CustomerApp {
                         System.out.println("Please login first to rent a car.");
                     } else {
                         System.out.println("Renting Car for - " + name);
+                        System.out.println();
                         rentCarWithAdvancePayment(name);
                     }
                     break;
@@ -128,12 +129,10 @@ public class CustomerApp {
             return;
         }
         //Display most popular cars
-        advanceService.displayMostPopularCars(2);
-        System.out.println("----------------");
+        advanceService.displayMostPopularCars(4);
 
         //Recommend cars for the customer
         advanceService.displayCarRecommendationsForCustomer(currentCustomer.getPhoneNumber());
-        System.out.println("----------------");
 
         System.out.println("\nAvailable Cars:");
         System.out.println("----------------");

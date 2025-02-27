@@ -30,6 +30,7 @@ public class DataCache<K, V> {
         // Update LRU list - move this key to the front (most recently used)
         lruList.remove(key);
         lruList.addFirst(key);
+        System.out.println("Returned through cached!");
 
         return cache.get(key);
     }
@@ -38,6 +39,7 @@ public class DataCache<K, V> {
         if (cache.containsKey(key)) {
             // Update existing entry
             cache.put(key, value);
+            System.out.println("Cached!");
 
             // Update LRU tracking
             lruList.remove(key);

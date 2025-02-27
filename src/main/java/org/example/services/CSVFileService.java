@@ -1,8 +1,6 @@
 package org.example.services;
 
-import org.example.models.Car;
-import org.example.models.Customer;
-import org.example.models.TravelHistory;
+import org.example.models.*;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -10,6 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -18,6 +17,7 @@ public class CSVFileService {
     private static final String CUSTOMERS_FILE = "customers.csv";
     private static final String CARS_FILE = "cars.csv";
     private static final String TRAVEL_HISTORY_FILE = "travel_history.csv";
+    private static final String BILLINGS_FILE = "billings.csv"; // New file for billings
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private static CSVFileService instance;
@@ -44,6 +44,7 @@ public class CSVFileService {
 
     // Load customers from CSV file
     public List<Customer> loadCustomers() {
+        // Existing code remains the same
         List<Customer> customers = new ArrayList<>();
         Path customerFile = Paths.get(DATA_DIRECTORY, CUSTOMERS_FILE);
 
@@ -76,7 +77,7 @@ public class CSVFileService {
         }
     }
 
-    // Load cars from CSV file
+    // Load cars from CSV file - updated to include hourly rate and category
     public List<Car> loadCars() {
         List<Car> cars = new ArrayList<>();
         Path carFile = Paths.get(DATA_DIRECTORY, CARS_FILE);
@@ -96,13 +97,119 @@ public class CSVFileService {
                     String carId = parts[0];
                     String model = parts[1];
                     boolean availability = Boolean.parseBoolean(parts[2]);
-                    cars.add(new Car(carId, model, availability));
+
+                    // Check if we have hourly rate and category in the file
+                    double hourlyRate = 10.0; // Default
+                    String category = "Standard"; // Default
+
+                    if (parts.length >= 4) {
+                        try {
+                            hourlyRate = Double.parseDouble(parts[3]);
+                        } catch (NumberFormatException e) {
+                            System.err.println("Invalid hourly rate for car " + carId + ": " + parts[3]);
+                        }
+                    }
+
+                    if (parts.length >= 5) {
+                        category = parts[4];
+                    }
+
+                    cars.add(new Car(carId, model, availability, hourlyRate, category));
                 }
             }
             return cars;
         } catch (IOException e) {
             System.err.println("Error loading cars from CSV: " + e.getMessage());
             return cars;
+        }
+    }
+
+    // Load billings from CSV file
+    public List<Billing> loadBillings() {
+        List<Billing> billings = new ArrayList<>();
+        Path billingFile = Paths.get(DATA_DIRECTORY, BILLINGS_FILE);
+
+        if (!Files.exists(billingFile)) {
+            return billings;
+        }
+
+        try (BufferedReader reader = Files.newBufferedReader(billingFile)) {
+            // Skip header line
+            reader.readLine();
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 8) {
+                    try {
+                        String billId = parts[0];
+                        String customerId = parts[1];
+                        String carId = parts[2];
+                        double hourlyRate = Double.parseDouble(parts[3]);
+                        double advancePayment = Double.parseDouble(parts[4]);
+                        double finalAmount = Double.parseDouble(parts[5]);
+                        LocalDateTime billingTime = LocalDateTime.parse(parts[6], DATE_FORMATTER);
+                        boolean isPaid = Boolean.parseBoolean(parts[7]);
+
+                        Billing billing = new Billing(billId, customerId, carId, hourlyRate,
+                                advancePayment, finalAmount, billingTime, isPaid);
+                        billings.add(billing);
+                    } catch (NumberFormatException | DateTimeParseException e) {
+                        System.err.println("Error parsing billing record: " + line);
+                    }
+                }
+            }
+            return billings;
+        } catch (IOException e) {
+            System.err.println("Error loading billings from CSV: " + e.getMessage());
+            return billings;
+        }
+    }
+
+    // Save cars to CSV file - updated to include hourly rate and category
+    public void saveCars(List<Car> cars) {
+        Path carFile = Paths.get(DATA_DIRECTORY, CARS_FILE);
+
+        try (PrintWriter writer = new PrintWriter(Files.newBufferedWriter(carFile))) {
+            // Write header
+            writer.println("CarId,Model,Available,HourlyRate,Category");
+
+            // Write car data
+            for (Car car : cars) {
+                writer.printf("%s,%s,%s,%.2f,%s%n",
+                        car.getCarId(),
+                        car.getModel(),
+                        car.isAvailable(),
+                        car.getHourlyRate(),
+                        car.getCategory());
+            }
+        } catch (IOException e) {
+            System.err.println("Error saving cars to CSV: " + e.getMessage());
+        }
+    }
+
+    // Save billings to CSV file
+    public void saveBillings(List<Billing> billings) {
+        Path billingFile = Paths.get(DATA_DIRECTORY, BILLINGS_FILE);
+
+        try (PrintWriter writer = new PrintWriter(Files.newBufferedWriter(billingFile))) {
+            // Write header
+            writer.println("BillId,CustomerId,CarId,HourlyRate,AdvancePayment,FinalAmount,BillingTime,IsPaid");
+
+            // Write billing data
+            for (Billing billing : billings) {
+                writer.printf("%s,%s,%s,%.2f,%.2f,%.2f,%s,%s%n",
+                        billing.getBillId(),
+                        billing.getCustomerId(),
+                        billing.getCarId(),
+                        billing.getHourlyRate(),
+                        billing.getAdvancePayment(),
+                        billing.getFinalAmount(),
+                        billing.getBillingTime().format(DATE_FORMATTER),
+                        billing.isPaid());
+            }
+        } catch (IOException e) {
+            System.err.println("Error saving billings to CSV: " + e.getMessage());
         }
     }
 
@@ -168,24 +275,24 @@ public class CSVFileService {
     }
 
     // Save cars to CSV file
-    public void saveCars(List<Car> cars) {
-        Path carFile = Paths.get(DATA_DIRECTORY, CARS_FILE);
-
-        try (PrintWriter writer = new PrintWriter(Files.newBufferedWriter(carFile))) {
-            // Write header
-            writer.println("CarId,Model,Available");
-
-            // Write car data
-            for (Car car : cars) {
-                writer.printf("%s,%s,%s%n",
-                        car.getCarId(),
-                        car.getModel(),
-                        car.isAvailable());
-            }
-        } catch (IOException e) {
-            System.err.println("Error saving cars to CSV: " + e.getMessage());
-        }
-    }
+//    public void saveCars(List<Car> cars) {
+//        Path carFile = Paths.get(DATA_DIRECTORY, CARS_FILE);
+//
+//        try (PrintWriter writer = new PrintWriter(Files.newBufferedWriter(carFile))) {
+//            // Write header
+//            writer.println("CarId,Model,Available");
+//
+//            // Write car data
+//            for (Car car : cars) {
+//                writer.printf("%s,%s,%s%n",
+//                        car.getCarId(),
+//                        car.getModel(),
+//                        car.isAvailable());
+//            }
+//        } catch (IOException e) {
+//            System.err.println("Error saving cars to CSV: " + e.getMessage());
+//        }
+//    }
 
     // Save travel histories to CSV file
     private void saveTravelHistories(List<Customer> customers) {

@@ -1,3 +1,3 @@
-CarId,Model,Available
-KA01AB1111,WagonR,false
-23455,mercedes gls,true
+CarId,Model,Available,HourlyRate,Category
+KA22EK1234,Tata Nexon,true,20.00,Standard
+KA22ER1234,Ford Mustang,true,100.00,Premium

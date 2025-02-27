@@ -35,7 +35,8 @@ public class CustomerServices {
 
     public String login(String phoneNumber, String password) {
         for (Customer customer : customers) {
-            if (customer.getPhoneNumber().equals(phoneNumber) && customer.getPassword().equals(password)) {
+            System.out.println("password : "+password);
+            if (customer.getPhoneNumber().equals(phoneNumber) && AuthServices.getInstance().verifyHash(password, customer.getPassword())) {
                 currentCustomer = customer;
                 System.out.println("Login successful. Welcome, " + customer.getName() + "!");
                 return customer.getName();
@@ -183,5 +184,14 @@ public class CustomerServices {
 
     public Customer getCurrentCustomer() {
         return currentCustomer;
+    }
+
+    public String getCustomerNameByPhone(String customerId) {
+        for (Customer customer : customers) {
+            if (customer.getPhoneNumber().equals(customerId)) {
+                return customer.getName();
+            }
+        }
+        return "Unknown";
     }
 }

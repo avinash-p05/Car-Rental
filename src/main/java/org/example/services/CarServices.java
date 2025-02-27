@@ -26,7 +26,7 @@ public class CarServices {
         return instance;
     }
 
-    public void addCar(String carId, String model) {
+    public void addCar(String carId, String model,String category,double hourlyRate) {
         // Check if car already exists
         for (Car car : cars) {
             if (car.getCarId().equals(carId)) {
@@ -36,7 +36,7 @@ public class CarServices {
         }
 
         // Add new car
-        Car newCar = new Car(carId, model);
+        Car newCar = new Car(carId, model,true, hourlyRate, category);
         cars.add(newCar);
         System.out.println("Car added successfully: " + model + " (ID: " + carId + ")");
         saveCarsToFile();
@@ -58,6 +58,8 @@ public class CarServices {
         for (Car car : sortedCars) {
             System.out.println("ID: " + car.getCarId());
             System.out.println("Model: " + car.getModel());
+            System.out.println("Category: " + car.getCategory());
+            System.out.println("Hourly Rate: " + car.getHourlyRate());
             System.out.println("Status: " + (car.isAvailable() ? "Available" : "Rented"));
             System.out.println("----------");
         }

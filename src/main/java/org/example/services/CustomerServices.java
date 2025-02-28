@@ -3,12 +3,10 @@ package org.example.services;
 
 import org.example.models.Car;
 import org.example.models.Customer;
-import org.example.models.Priority;
 import org.example.models.TravelHistory;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.concurrent.PriorityBlockingQueue;
 
 public class CustomerServices {
     private static CustomerServices instance;
@@ -17,7 +15,6 @@ public class CustomerServices {
     private final CSVFileService csvFileService;
     private final AuthServices authServices;
     private Customer currentCustomer;
-    private PriorityBlockingQueue<Priority> priorityCustomers = new PriorityBlockingQueue<>();
 
     private CustomerServices() {
         csvFileService = CSVFileService.getInstance();

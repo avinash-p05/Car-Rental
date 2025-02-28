@@ -71,13 +71,13 @@ public class AdminServices {
         System.out.println("Total Rentals (all time): " + totalRentals);
         System.out.println("Active Rentals: " + activeRentals);
 
-//        if (!carModelRentals.isEmpty()) {
-//            System.out.println("\nPopular Car Models:");
-//            carModelRentals.entrySet().stream()
-//                    .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
-//                    .limit(5)
-//                    .forEach(entry -> System.out.println("- " + entry.getKey() + ": " + entry.getValue() + " rentals"));
-//        }
+        if (!carModelRentals.isEmpty()) {
+            System.out.println("\nPopular Car Models:");
+            carModelRentals.entrySet().stream()
+                    .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
+                    .limit(5)
+                    .forEach(entry -> System.out.println("- " + entry.getKey() + ": " + entry.getValue() + " rentals"));
+        }
 
         System.out.println("=============================");
     }

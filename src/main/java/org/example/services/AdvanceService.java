@@ -1,10 +1,8 @@
 package org.example.services;
 
-import org.checkerframework.checker.units.qual.C;
 import org.example.models.Car;
 import org.example.models.Customer;
 import org.example.models.TravelHistory;
-import org.example.structures.CarCategoryList;
 import org.example.structures.DataCache;
 import org.example.structures.RentalGraph;
 
@@ -15,26 +13,12 @@ public class AdvanceService {
     private RentalGraph rentalGraph;
     private DataCache<String, Car> carCache;
     private DataCache<String, Customer> customerCache;
-    private CarCategoryList categoryList;
-    private Set<String> premiumCustomers;
-    private Set<String> blacklistedCustomers;
-
+    
     private AdvanceService() {
         this.rentalGraph = new RentalGraph();
         this.carCache = new DataCache<>(100);
         this.customerCache = new DataCache<>(50);
-        this.categoryList = new CarCategoryList();
-        this.premiumCustomers = new HashSet<>();
-        this.blacklistedCustomers = new HashSet<>();
-        initializeCategories();
         buildRentalGraphFromHistory();
-    }
-
-    private void initializeCategories() {
-        categoryList.addCategory("Economy", 8.0);
-        categoryList.addCategory("Standard", 10.0);
-        categoryList.addCategory("Premium", 15.0);
-        categoryList.addCategory("Luxury", 25.0);
     }
 
     public static AdvanceService getInstance() {
@@ -118,38 +102,4 @@ public class AdvanceService {
         System.out.println();
     }
 
-    public void addPremiumCustomer(String customerId) {
-        premiumCustomers.add(customerId);
-        System.out.println("Customer ID " + customerId + " added to Premium Customers.");
-    }
-
-    public void checkPremiumCustomer(String customerId) {
-        System.out.println("Customer ID " + customerId + " is " + (premiumCustomers.contains(customerId) ? "a Premium Customer." : "not a Premium Customer."));
-    }
-
-    public void addBlacklistedCustomer(String customerId) {
-        blacklistedCustomers.add(customerId);
-        System.out.println("Customer ID " + customerId + " added to Blacklist.");
-    }
-
-    public void checkBlacklistedCustomer(String customerId) {
-        System.out.println("Customer ID " + customerId + " is " + (blacklistedCustomers.contains(customerId) ? "Blacklisted." : "not Blacklisted."));
-    }
-
-    public void displayCategoryBasePrice(String category) {
-        System.out.println("Base price for " + category + " category: $" + categoryList.getCategoryBasePrice(category) + " per hour.");
-    }
-
-    public void displaySuggestedUpgrade(String currentCategory) {
-        System.out.println("Suggested upgrade for " + currentCategory + ": " + categoryList.getNextHigherCategory(currentCategory));
-    }
-
-    public void displayAllCarCategories() {
-        System.out.println("Available Car Categories: " + Arrays.toString(categoryList.getAllCategories()));
-    }
-
-    public void addCarCategory(String category, double basePrice) {
-        categoryList.addCategory(category, basePrice);
-        System.out.println("New Car Category Added: " + category + " with base price $" + basePrice + " per hour.");
-    }
 }

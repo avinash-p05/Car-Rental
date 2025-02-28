@@ -14,7 +14,7 @@ import java.util.Map;
 public class DataCache<K, V> {
     private final int capacity;
     private final Map<K, V> cache;
-    private final LinkedList<K> lruList; // Track usage order for LRU eviction
+    private final LinkedList<K> lruList;
 
     public DataCache(int capacity) {
         this.capacity = capacity;
@@ -26,7 +26,6 @@ public class DataCache<K, V> {
         if (!cache.containsKey(key)) {
             return null;
         }
-
         // Update LRU list - move this key to the front (most recently used)
         lruList.remove(key);
         lruList.addFirst(key);
